@@ -14,6 +14,15 @@
 
 // Eigen::MatrixXd Z_0(1,1);
 
+Eigen::MatrixXd fun(Eigen::MatrixXd X, Eigen::MatrixXd U){
+
+    std::cout << "this is fun" << std::endl;
+    return X + U;
+
+
+
+}
+
 
 int twoDimRocketExample(){
 
@@ -69,7 +78,7 @@ int twoDimRocketExample(){
     U_n = a_n + g;
 
 
-    EKF ekf(A, B, D, Q, R, X_0, U_0, P);
+    EKF ekf(A, B, D, Q, R, X_0, U_0, P, true);
     Eigen::MatrixXd U_k(1,1);
     Eigen::MatrixXd Z_k(1,1);
     
@@ -81,7 +90,7 @@ int twoDimRocketExample(){
 
 
         std::cout <<"Computing K = " << i << std::endl;
-        std::cout << ekf.compute(Z_k, U_k) << std::endl;
+        std::cout << ekf.computeKF(Z_k, U_k) << std::endl;
         std::cout << "----------------------"<< std::endl;
 
         
@@ -167,7 +176,7 @@ int sixDimCarExample(){
     for(auto col : Z.colwise()){
 
         std::cout <<"Computing K = " << i << std::endl;
-        std::cout << ekf.compute(col, U_0) << std::endl;
+        std::cout << ekf.computeKF(col, U_0) << std::endl;
         i++;
         std::cout << "----------------------"<< std::endl;
 
@@ -232,31 +241,31 @@ int singleDim(){
     EKF ekf(A, B, D, Q, R, X_0, U_0, P);
     Z_0 << 48.54;
     std::cout <<"Computing K = 1" << std::endl;
-    std::cout << ekf.compute(Z_0, U_0) << std::endl;
+    std::cout << ekf.computeKF(Z_0, U_0) << std::endl;
 
     Z_0 << 47.11;
     std::cout << "Computing K = 2" << std::endl;
-    std::cout << ekf.compute(Z_0, U_0) << std::endl;
+    std::cout << ekf.computeKF(Z_0, U_0) << std::endl;
 
 
     Z_0 << 55.01;
     std::cout << "Computing K = 3" << std::endl;
-    std::cout << ekf.compute(Z_0, U_0) << std::endl;
+    std::cout << ekf.computeKF(Z_0, U_0) << std::endl;
 
     Z_0 << 55.15;
     std::cout << "Computing K = 4" << std::endl;
-    std::cout << ekf.compute(Z_0, U_0) << std::endl;
+    std::cout << ekf.computeKF(Z_0, U_0) << std::endl;
 
 
     Z_0 << 49.89;
     std::cout << "Computing K = 5" << std::endl;
-    std::cout << ekf.compute(Z_0, U_0) << std::endl;
+    std::cout << ekf.computeKF(Z_0, U_0) << std::endl;
 
 
 
     Z_0 << 40.85;
     std::cout << "Computing K = 6" << std::endl;
-    std::cout << ekf.compute(Z_0, U_0) << std::endl;
+    std::cout << ekf.computeKF(Z_0, U_0) << std::endl;
 
     return 0;
 
